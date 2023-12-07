@@ -2,4 +2,9 @@ import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
 
-createApp(App).mount('#app')
+import request from './utils/request';
+
+const app = createApp(App);
+app.config.globalProperties.$api = request;
+
+app.mount('#app')
