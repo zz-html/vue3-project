@@ -1,12 +1,15 @@
 <script setup>
-import { getCurrentInstance } from 'vue';
+import { getCurrentInstance,ref } from 'vue';
 const { proxy } = getCurrentInstance();
-//let res = $ref(null);
+
+const count = ref(-1);
+
 function handleClick() {
-  console.log("handleClick",proxy);
+  //console.log("handleClick",proxy);
   proxy.$api.get('/remote-server/socketManage/getSocketIOServerInfo')
     .then(response => {
-      console.log(response.data);
+      console.log("response.data",response.data);
+      count.value = response.data.clientsCount;
     })
     .catch(error => {
       console.error(error);
@@ -17,6 +20,7 @@ function handleClick() {
 <template>
   <div>
     <button @click="handleClick">click</button>
+    {{ count }}
   </div>
 
 </template>

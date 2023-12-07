@@ -33,10 +33,11 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
   (response) => {
-    const res = response.data;
-    const { code, msg } = res;
-    if (code === 200) {
-      return res;
+    // console.log("response",response);
+    // const res = response.data;
+    // const { code, msg } = res;
+    if (response.status === 200) {
+      return response;
     } else {
       // token过期
       // if (code === -1) {
