@@ -16,6 +16,13 @@ export default defineConfig({
           '^/v1/traces': '/v1/traces'
         }
       },
+      '/demo': {
+        target: 'http://127.0.0.1:8080', // 后端 API 地址
+        changeOrigin: true,
+        pathRewrite: {
+          '^/demo': '/demo'
+        }
+      },
     },  
   }
 })

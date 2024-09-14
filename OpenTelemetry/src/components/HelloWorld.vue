@@ -1,18 +1,42 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, getCurrentInstance } from 'vue'
+const { proxy } = getCurrentInstance();
 
 defineProps({
   msg: String,
 })
 
 const count = ref(0)
+
+const fetchData = () => {
+  console.log("fetchData");
+  proxy.$axios.get('/demo/test')
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+};
+
+const fetchData2 = async () => {
+  try {
+    const response = await proxy.$axios.get('/demo/test2');
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
 
   <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
+    <button id="countBtn" type="button" @click="count++">count is {{ count }}</button>
+    <button id="axiosBtn" type="button" @click="fetchData">axios</button>
+    <button id="axiosBtn2" type="button" @click="fetchData2">axios2</button>
     <p>
       Edit
       <code>components/HelloWorld.vue</code> to test HMR
