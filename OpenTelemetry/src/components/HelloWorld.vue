@@ -1,6 +1,9 @@
 <script setup>
 import { ref, getCurrentInstance } from 'vue'
+import { trace } from '@opentelemetry/api';
+
 const { proxy } = getCurrentInstance();
+const tracer = trace.getTracer('vue-frontend');
 
 defineProps({
   msg: String,
@@ -30,6 +33,11 @@ const fetchData2 = async () => {
 
 const manuData = () => {
   console.log("manuData");
+  const span = tracer.startSpan('fetch-data');
+  span.addEvent('do something1 successfully');
+  span.addEvent('do something2 successfully');
+  // span.recordException(error);
+  span.end();
 };
 
 </script>
